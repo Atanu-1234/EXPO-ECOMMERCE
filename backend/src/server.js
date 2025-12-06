@@ -3,6 +3,8 @@ import { connectDB } from './config/db.js';
 import path from 'path';
 import { ENV } from './config/env.js';
 import {clerkMiddleware} from "@clerk/express";
+import path from 'path';
+import { ENV } from './config/env.js';
 
 
 
@@ -12,6 +14,9 @@ const __dirname = path.resolve();
 app.use(clerkMiddleware());
 
 app.get('/api/health', (req, res) => {
+const __dirname = path.resolve();
+
+app.get('/api/healthcheck', (req, res) => {
     res.status(200).json({ message:"Success" })
 });
 if (ENV.NODE_ENV === 'production') {
@@ -23,10 +28,7 @@ if (ENV.NODE_ENV === 'production') {
     });
 }
 
-const startServer = async () => {
-    await connectDB();
-    app.listen(ENV.PORT, () => {
-        console.log(`Server is running on port ${ENV.PORT}`);
+app.listen(3000, () => {
+    console.log('Server is running on ');
+    connectDB();
 });
-};
-startServer();
